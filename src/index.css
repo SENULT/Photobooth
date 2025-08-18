@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 282 100% 4%;
+    --foreground: 312 5% 95%;
+    --card: 282 50% 8%;
+    --card-foreground: 312 5% 95%;
+    --popover: 282 50% 8%;
+    --popover-foreground: 312 5% 95%;
+    --primary: 312 100% 50%;
+    --primary-foreground: 312 5% 95%;
+    --secondary: 282 30% 12%;
+    --secondary-foreground: 312 5% 95%;
+    --muted: 282 30% 12%;
+    --muted-foreground: 312 5% 60%;
+    --accent: 282 30% 12%;
+    --accent-foreground: 312 5% 95%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 312 5% 95%;
+    --border: 282 30% 12%;
+    --input: 282 30% 12%;
+    --ring: 312 100% 50%;
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background: linear-gradient(135deg, #0d0221 0%, #1a0b2e 25%, #2d1b4e 50%, #4a1c5c 75%, #662d91 100%);
+    min-height: 100vh;
+  }
+}
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+}
+
+.gradient-text {
+  background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f, #4d9de0, #9b59b6);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient 3s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
