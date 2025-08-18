@@ -31,7 +31,7 @@ A modern, responsive web application built with React, Vite, Tailwind CSS, and S
 
 1. Clone or navigate to the project directory:
    ```bash
-   cd d:\reviewalltech\model\frontend
+   cd frontend
    ```
 
 2. Install dependencies:
