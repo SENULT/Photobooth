@@ -11,20 +11,26 @@ function App() {
     <div className="min-h-screen">
       <Header />
       
-      {/* Navigation Tabs */}
+      {/* Navigation Tabs - giống thiết kế */}
       <div className="flex justify-center mb-8">
-        <div className="flex bg-black bg-opacity-20 rounded-lg p-1 glass-effect">
+        <div className="flex bg-black/30 backdrop-blur rounded-full p-1">
           <Button
-            variant={currentView === 'generator' ? 'gradient' : 'ghost'}
             onClick={() => setCurrentView('generator')}
-            className="px-6 py-2 text-white"
+            className={`px-8 py-3 rounded-full font-medium transition-all ${
+              currentView === 'generator' 
+                ? 'bg-purple-600 text-white' 
+                : 'text-gray-300 hover:text-white bg-transparent'
+            }`}
           >
             Generator
           </Button>
           <Button
-            variant={currentView === 'gallery' ? 'gradient' : 'ghost'}
             onClick={() => setCurrentView('gallery')}
-            className="px-6 py-2 text-white"
+            className={`px-8 py-3 rounded-full font-medium transition-all ${
+              currentView === 'gallery' 
+                ? 'bg-purple-600 text-white' 
+                : 'text-gray-300 hover:text-white bg-transparent'
+            }`}
           >
             Gallery
           </Button>

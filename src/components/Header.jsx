@@ -3,32 +3,19 @@ import React from 'react';
 const Header = () => {
   return (
     <header className="w-full p-4 lg:p-6">
-      <div className="flex items-center justify-between max-w-7xl mx-auto">
-        {/* Logo */}
+      <div className="flex items-center max-w-7xl mx-auto">
+        {/* ITSC Logo - theo thiết kế */}
         <div className="flex items-center space-x-3">
-          <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-xl">IT</span>
+          <div className="w-16 h-16 bg-white rounded-lg flex items-center justify-center">
+            <div className="text-purple-900 font-bold text-2xl">IT</div>
           </div>
-          <div className="hidden sm:block">
-            <h1 className="text-white font-bold text-lg">INNOVATIVE</h1>
-            <h2 className="text-white font-bold text-lg">TECHNOLOGY</h2>
-            <p className="text-gray-300 text-sm">STUDENT CLUB</p>
+          <div className="text-white">
+            <div className="font-bold text-lg leading-tight">INNOVATIVE</div>
+            <div className="font-bold text-lg leading-tight">TECHNOLOGY</div>
+            <div className="font-bold text-lg leading-tight">STUDENT CLUB</div>
           </div>
         </div>
-
-        {/* Navigation (hidden on mobile) */}
-        <nav className="hidden md:flex items-center space-x-6">
-          <a href="#generator" className="text-white hover:text-purple-300 transition-colors">
-            Generator
-          </a>
-          <a href="#gallery" className="text-white hover:text-purple-300 transition-colors">
-            Gallery
-          </a>
-          <a href="#about" className="text-white hover:text-purple-300 transition-colors">
-            About
-          </a>
-        </nav>
-
+        
         {/* Mobile menu button */}
         <button className="md:hidden text-white">
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

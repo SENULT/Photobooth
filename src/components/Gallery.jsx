@@ -6,79 +6,112 @@ import { Search } from 'lucide-react';
 const Gallery = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Sample gallery images - in real app, these would come from API
+  // Sample gallery images với heights khác nhau cho masonry layout
   const galleryImages = [
     {
       id: 1,
-      url: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=400&fit=crop',
+      url: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=600&fit=crop',
       style: 'cyberpunk',
-      title: 'Cyberpunk Motorcycle'
+      title: 'Cyberpunk Motorcycle',
+      height: 'h-80'
     },
     {
       id: 2,
-      url: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=face',
+      url: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=500&fit=crop&crop=face',
       style: 'anime',
-      title: 'Anime Character'
+      title: 'Anime Character',
+      height: 'h-64'
     },
     {
       id: 3,
-      url: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=400&h=400&fit=crop',
+      url: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=400&h=700&fit=crop',
       style: 'oil-painting',
-      title: 'Oil Painting Landscape'
+      title: 'Oil Painting Landscape',
+      height: 'h-96'
     },
     {
       id: 4,
-      url: 'https://images.unsplash.com/photo-1516557070061-c3d1653fa646?w=400&h=400&fit=crop',
+      url: 'https://images.unsplash.com/photo-1516557070061-c3d1653fa646?w=400&h=450&fit=crop',
       style: 'fantasy',
-      title: 'Fantasy Portrait'
+      title: 'Fantasy Portrait',
+      height: 'h-56'
     },
     {
       id: 5,
-      url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop',
+      url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=800&fit=crop',
       style: 'nature',
-      title: 'Mountain Landscape'
+      title: 'Mountain Landscape',
+      height: 'h-72'
     },
     {
       id: 6,
-      url: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=400&fit=crop',
+      url: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=550&fit=crop',
       style: 'cyberpunk',
-      title: 'Neon City'
+      title: 'Neon City',
+      height: 'h-68'
     },
     {
       id: 7,
-      url: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=face',
+      url: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=650&fit=crop&crop=face',
       style: 'anime',
-      title: 'Anime Warrior'
+      title: 'Anime Warrior',
+      height: 'h-80'
     },
     {
       id: 8,
-      url: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=400&h=400&fit=crop',
+      url: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=400&h=480&fit=crop',
       style: 'abstract',
-      title: 'Abstract Art'
+      title: 'Abstract Art',
+      height: 'h-60'
     },
     {
       id: 9,
-      url: 'https://images.unsplash.com/photo-1516557070061-c3d1653fa646?w=400&h=400&fit=crop',
+      url: 'https://images.unsplash.com/photo-1516557070061-c3d1653fa646?w=400&h=750&fit=crop',
       style: 'portrait',
-      title: 'Digital Portrait'
+      title: 'Digital Portrait',
+      height: 'h-88'
     },
     {
       id: 10,
-      url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop',
+      url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=420&fit=crop',
       style: 'landscape',
-      title: 'Sunset Valley'
+      title: 'Sunset Valley',
+      height: 'h-52'
     },
     {
       id: 11,
-      url: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=400&fit=crop',
+      url: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=680&fit=crop',
       style: 'sci-fi',
-      title: 'Space Station'
+      title: 'Space Station',
+      height: 'h-84'
     },
     {
       id: 12,
-      url: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=face',
+      url: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=520&fit=crop&crop=face',
       style: 'character',
-      title: 'Hero Character'
+      title: 'Hero Character',
+      height: 'h-66'
+    },
+    {
+      id: 13,
+      url: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=400&h=600&fit=crop',
+      style: 'fantasy',
+      title: 'Magic Portal',
+      height: 'h-76'
+    },
+    {
+      id: 14,
+      url: 'https://images.unsplash.com/photo-1516557070061-c3d1653fa646?w=400&h=460&fit=crop',
+      style: 'cyberpunk',
+      title: 'Cyber Warrior',
+      height: 'h-58'
+    },
+    {
+      id: 15,
+      url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=720&fit=crop',
+      style: 'nature',
+      title: 'Forest Scene',
+      height: 'h-90'
     }
   ];
 
