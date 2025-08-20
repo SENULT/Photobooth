@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Upload, Sparkles, RotateCcw, Share2, RefreshCw, Frame } from 'lucide-react';
+import ImageEditor from './ImageEditor';
 
 const ImageGenerator = () => {
   const [selectedStyle, setSelectedStyle] = useState('anime');
@@ -9,6 +10,8 @@ const ImageGenerator = () => {
   const [uploadedImage, setUploadedImage] = useState(null);
   const [generatedImage, setGeneratedImage] = useState(null);
   const [generationTime, setGenerationTime] = useState('');
+  const [showImageEditor, setShowImageEditor] = useState(false);
+  const [editingImage, setEditingImage] = useState(null);
 
   const styles = [
     {
@@ -53,6 +56,37 @@ const ImageGenerator = () => {
       const now = new Date();
       setGenerationTime(`${(now.getMonth() + 1)}/${now.getDate()}/${now.getFullYear()}, ${now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} ${now.getHours() >= 12 ? 'PM' : 'AM'}`);
     }, 3000);
+  };
+
+  const handleShare = () => {
+    if (generatedImage) {
+      const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
+      window.open(shareUrl, '_blank', 'width=600,height=400');
+    }
+  };
+
+  const handleRegenerateClick = () => {
+    if (uploadedImage) {
+      handleGenerate();
+    }
+  };
+
+  const handleFrameClick = () => {
+    if (generatedImage) {
+      setEditingImage(generatedImage);
+      setShowImageEditor(true);
+    }
+  };
+
+  const handleEditorClose = () => {
+    setShowImageEditor(false);
+    setEditingImage(null);
+  };
+
+  const handleEditorSave = (editedImageData) => {
+    setGeneratedImage(editedImageData);
+    setShowImageEditor(false);
+    setEditingImage(null);
   };
 
   return (
@@ -201,17 +235,26 @@ const ImageGenerator = () => {
             {generatedImage && !isGenerating && (
               <div className="mt-6 space-y-4">
                 <div className="flex gap-4">
-                  <Button className="flex-1 h-12 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium text-base">
+                  <Button 
+                    onClick={handleShare}
+                    className="flex-1 h-12 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium text-base"
+                  >
                     <Share2 className="w-5 h-5 mr-2" />
                     Share
                   </Button>
-                  <Button className="flex-1 h-12 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium text-base">
+                  <Button 
+                    onClick={handleRegenerateClick}
+                    className="flex-1 h-12 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium text-base"
+                  >
                     <RefreshCw className="w-5 h-5 mr-2" />
                     Regenerate
                   </Button>
-                  <Button className="flex-1 h-12 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium text-base">
+                  <Button 
+                    onClick={handleFrameClick}
+                    className="flex-1 h-12 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium text-base"
+                  >
                     <Frame className="w-5 h-5 mr-2" />
-                    Frame
+                    Edit
                   </Button>
                 </div>
                 <div className="text-right text-gray-300 text-base font-medium pt-2">
@@ -222,6 +265,15 @@ const ImageGenerator = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Image Editor Modal */}
+      {showImageEditor && editingImage && (
+        <ImageEditor
+          image={editingImage}
+          onClose={handleEditorClose}
+          onSave={handleEditorSave}
+        />
+      )}
     </div>
   );
 };
