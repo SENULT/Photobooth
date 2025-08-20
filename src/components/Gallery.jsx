@@ -1,178 +1,156 @@
 import React, { useState } from 'react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Search } from 'lucide-react';
+import { Button } from './ui/button';
 
 const Gallery = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-
-  // Sample gallery images với heights khác nhau cho masonry layout
-  const galleryImages = [
-    {
-      id: 1,
-      url: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=600&fit=crop',
-      style: 'cyberpunk',
-      title: 'Cyberpunk Motorcycle',
-      height: 'h-80'
-    },
-    {
-      id: 2,
-      url: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=500&fit=crop&crop=face',
-      style: 'anime',
-      title: 'Anime Character',
-      height: 'h-64'
-    },
-    {
-      id: 3,
-      url: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=400&h=700&fit=crop',
-      style: 'oil-painting',
-      title: 'Oil Painting Landscape',
-      height: 'h-96'
-    },
-    {
-      id: 4,
-      url: 'https://images.unsplash.com/photo-1516557070061-c3d1653fa646?w=400&h=450&fit=crop',
-      style: 'fantasy',
-      title: 'Fantasy Portrait',
-      height: 'h-56'
-    },
-    {
-      id: 5,
-      url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=800&fit=crop',
-      style: 'nature',
-      title: 'Mountain Landscape',
-      height: 'h-72'
-    },
-    {
-      id: 6,
-      url: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=550&fit=crop',
-      style: 'cyberpunk',
-      title: 'Neon City',
-      height: 'h-68'
-    },
-    {
-      id: 7,
-      url: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=650&fit=crop&crop=face',
-      style: 'anime',
-      title: 'Anime Warrior',
-      height: 'h-80'
-    },
-    {
-      id: 8,
-      url: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=400&h=480&fit=crop',
-      style: 'abstract',
-      title: 'Abstract Art',
-      height: 'h-60'
-    },
-    {
-      id: 9,
-      url: 'https://images.unsplash.com/photo-1516557070061-c3d1653fa646?w=400&h=750&fit=crop',
-      style: 'portrait',
-      title: 'Digital Portrait',
-      height: 'h-88'
-    },
-    {
-      id: 10,
-      url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=420&fit=crop',
-      style: 'landscape',
-      title: 'Sunset Valley',
-      height: 'h-52'
-    },
-    {
-      id: 11,
-      url: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=680&fit=crop',
-      style: 'sci-fi',
-      title: 'Space Station',
-      height: 'h-84'
-    },
-    {
-      id: 12,
-      url: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=520&fit=crop&crop=face',
-      style: 'character',
-      title: 'Hero Character',
-      height: 'h-66'
-    },
-    {
-      id: 13,
-      url: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=400&h=600&fit=crop',
-      style: 'fantasy',
-      title: 'Magic Portal',
-      height: 'h-76'
-    },
-    {
-      id: 14,
-      url: 'https://images.unsplash.com/photo-1516557070061-c3d1653fa646?w=400&h=460&fit=crop',
-      style: 'cyberpunk',
-      title: 'Cyber Warrior',
-      height: 'h-58'
-    },
-    {
-      id: 15,
-      url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=720&fit=crop',
-      style: 'nature',
-      title: 'Forest Scene',
-      height: 'h-90'
-    }
+  const [currentPage, setCurrentPage] = useState(1);
+  const [gridSize, setGridSize] = useState('medium'); // small, medium, large
+  const imagesPerPage = gridSize === 'small' ? 24 : gridSize === 'medium' ? 12 : 6;
+  
+  // Sample images data - thay thế bằng dữ liệu thật từ API
+  const sampleImages = [
+    "https://picsum.photos/400/400?random=1",
+    "https://picsum.photos/400/400?random=2", 
+    "https://picsum.photos/400/400?random=3",
+    "https://picsum.photos/400/400?random=4",
+    "https://picsum.photos/400/400?random=5",
+    "https://picsum.photos/400/400?random=6",
+    "https://picsum.photos/400/400?random=7",
+    "https://picsum.photos/400/400?random=8",
+    "https://picsum.photos/400/400?random=9",
+    "https://picsum.photos/400/400?random=10",
+    "https://picsum.photos/400/400?random=11",
+    "https://picsum.photos/400/400?random=12",
+    "https://picsum.photos/400/400?random=13",
+    "https://picsum.photos/400/400?random=14",
+    "https://picsum.photos/400/400?random=15",
+    "https://picsum.photos/400/400?random=16",
+    "https://picsum.photos/400/400?random=17",
+    "https://picsum.photos/400/400?random=18",
+    "https://picsum.photos/400/400?random=19",
+    "https://picsum.photos/400/400?random=20",
+    "https://picsum.photos/400/400?random=21",
+    "https://picsum.photos/400/400?random=22",
+    "https://picsum.photos/400/400?random=23",
+    "https://picsum.photos/400/400?random=24",
+    "https://picsum.photos/400/400?random=25",
+    "https://picsum.photos/400/400?random=26",
+    "https://picsum.photos/400/400?random=27",
+    "https://picsum.photos/400/400?random=28",
+    "https://picsum.photos/400/400?random=29",
+    "https://picsum.photos/400/400?random=30",
   ];
 
-  const filteredImages = galleryImages.filter(image =>
-    image.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    image.style.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const totalPages = Math.ceil(sampleImages.length / imagesPerPage);
+  const startIndex = (currentPage - 1) * imagesPerPage;
+  const currentImages = sampleImages.slice(startIndex, startIndex + imagesPerPage);
+
+  const getGridCols = () => {
+    switch(gridSize) {
+      case 'small': return 'grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8';
+      case 'medium': return 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4';
+      case 'large': return 'grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3';
+      default: return 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4';
+    }
+  };
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 py-8">
-      {/* Header */}
-      <div className="text-center mb-8">
-        <h1 className="text-4xl md:text-6xl font-bold gradient-text mb-8">
-          ITSC GALLERY
-        </h1>
-        
-        {/* Search Bar */}
-        <div className="max-w-md mx-auto relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-          <Input
-            type="text"
-            placeholder="Search for an AI image"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 pr-20 h-12 text-white placeholder-gray-400"
-          />
-          <Button
-            variant="gradient"
-            className="absolute right-1 top-1 bottom-1 px-6"
-          >
-            Search
-          </Button>
+      {/* Controls */}
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
+        {/* Grid Size Controls */}
+        <div className="flex items-center gap-2">
+          <span className="text-gray-300 text-sm">View:</span>
+          <div className="flex bg-black/30 backdrop-blur rounded-lg p-1">
+            <Button
+              onClick={() => setGridSize('small')}
+              className={`px-3 py-2 rounded text-xs transition-all ${
+                gridSize === 'small' 
+                  ? 'bg-purple-600 text-white' 
+                  : 'text-gray-300 hover:text-white bg-transparent'
+              }`}
+            >
+              Small
+            </Button>
+            <Button
+              onClick={() => setGridSize('medium')}
+              className={`px-3 py-2 rounded text-xs transition-all ${
+                gridSize === 'medium' 
+                  ? 'bg-purple-600 text-white' 
+                  : 'text-gray-300 hover:text-white bg-transparent'
+              }`}
+            >
+              Medium
+            </Button>
+            <Button
+              onClick={() => setGridSize('large')}
+              className={`px-3 py-2 rounded text-xs transition-all ${
+                gridSize === 'large' 
+                  ? 'bg-purple-600 text-white' 
+                  : 'text-gray-300 hover:text-white bg-transparent'
+              }`}
+            >
+              Large
+            </Button>
+          </div>
+        </div>
+
+        {/* Pagination Info */}
+        <div className="text-gray-300 text-sm">
+          Page {currentPage} of {totalPages} ({sampleImages.length} images)
         </div>
       </div>
 
-      {/* Gallery Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
-        {filteredImages.map((image) => (
-          <div
-            key={image.id}
-            className="group relative aspect-square overflow-hidden rounded-lg cursor-pointer transition-transform hover:scale-105"
+      {/* Image Grid */}
+      <div className={`grid ${getGridCols()} gap-4 mb-8`}>
+        {currentImages.map((image, index) => (
+          <div 
+            key={startIndex + index} 
+            className="aspect-square bg-gray-800 rounded-lg overflow-hidden hover:scale-105 transition-transform duration-200 cursor-pointer group"
           >
-            <img
-              src={image.url}
-              alt={image.title}
-              className="w-full h-full object-cover transition-transform group-hover:scale-110"
+            <img 
+              src={image} 
+              alt={`Gallery image ${startIndex + index + 1}`}
+              className="w-full h-full object-cover group-hover:brightness-110 transition-all duration-200"
+              loading="lazy"
             />
-            <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-end">
-              <div className="p-3 text-white opacity-0 group-hover:opacity-100 transition-opacity">
-                <h3 className="font-semibold text-sm">{image.title}</h3>
-                <p className="text-xs text-gray-300 capitalize">{image.style}</p>
-              </div>
-            </div>
           </div>
         ))}
       </div>
 
-      {/* No results */}
-      {filteredImages.length === 0 && (
-        <div className="text-center py-16">
-          <p className="text-gray-400 text-lg">No images found matching your search.</p>
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex justify-center items-center gap-2">
+          <Button
+            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-black/30 text-gray-300 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Previous
+          </Button>
+          
+          <div className="flex gap-1">
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+              <Button
+                key={page}
+                onClick={() => setCurrentPage(page)}
+                className={`px-3 py-2 text-sm transition-all ${
+                  currentPage === page 
+                    ? 'bg-purple-600 text-white' 
+                    : 'bg-black/30 text-gray-300 hover:text-white'
+                }`}
+              >
+                {page}
+              </Button>
+            ))}
+          </div>
+
+          <Button
+            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-black/30 text-gray-300 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Next
+          </Button>
         </div>
       )}
     </div>

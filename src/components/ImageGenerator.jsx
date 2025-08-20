@@ -56,16 +56,7 @@ const ImageGenerator = () => {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 py-8">
-      <div className="text-center mb-8">
-        <h1 className="text-4xl md:text-6xl font-bold gradient-text mb-4">
-          Image to Image
-        </h1>
-        <h2 className="text-4xl md:text-6xl font-bold gradient-text">
-          AI Generator
-        </h2>
-      </div>
-
+    <div className="w-full max-w-7xl mx-auto px-4 py-4">
       <div className="grid lg:grid-cols-2 gap-8">
         {/* Left Panel - Controls */}
         <div className="space-y-6">
@@ -174,15 +165,15 @@ const ImageGenerator = () => {
 
         {/* Right Panel - Result */}
         <Card className="h-fit bg-black/20 border-purple-500/30 backdrop-blur">
-          <CardContent className="p-6">
-            <div className="aspect-square bg-gradient-to-br from-purple-900/50 to-pink-900/50 rounded-lg flex items-center justify-center relative overflow-hidden border border-purple-500/20">
+          <CardContent className="p-8">
+            <div className="aspect-[4/5] bg-gradient-to-br from-purple-900/50 to-pink-900/50 rounded-lg flex items-center justify-center relative overflow-hidden border border-purple-500/20">
               {isGenerating ? (
                 <div className="text-center text-white">
-                  <div className="relative w-16 h-16 mx-auto mb-6">
+                  <div className="relative w-20 h-20 mx-auto mb-8">
                     <div className="absolute inset-0 rounded-full border-4 border-purple-500/20"></div>
                     <div className="absolute inset-0 rounded-full border-4 border-purple-500 border-t-transparent animate-spin"></div>
                   </div>
-                  <p className="text-lg font-medium">Wait a minute ...</p>
+                  <p className="text-xl font-medium">Wait a minute ...</p>
                 </div>
               ) : generatedImage ? (
                 <div className="w-full h-full">
@@ -200,30 +191,30 @@ const ImageGenerator = () => {
                 />
               ) : (
                 <div className="text-center text-gray-400">
-                  <Upload className="w-16 h-16 mx-auto mb-4 opacity-30" />
-                  <p className="text-sm">Upload an image to see preview</p>
+                  <Upload className="w-20 h-20 mx-auto mb-6 opacity-30" />
+                  <p className="text-base">Upload an image to see preview</p>
                 </div>
               )}
             </div>
             
             {/* Action buttons và timestamp khi có kết quả */}
             {generatedImage && !isGenerating && (
-              <div className="mt-4 space-y-3">
-                <div className="flex gap-3">
-                  <Button className="flex-1 h-10 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium">
-                    <Share2 className="w-4 h-4 mr-2" />
+              <div className="mt-6 space-y-4">
+                <div className="flex gap-4">
+                  <Button className="flex-1 h-12 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium text-base">
+                    <Share2 className="w-5 h-5 mr-2" />
                     Share
                   </Button>
-                  <Button className="flex-1 h-10 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium">
-                    <RefreshCw className="w-4 h-4 mr-2" />
+                  <Button className="flex-1 h-12 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium text-base">
+                    <RefreshCw className="w-5 h-5 mr-2" />
                     Regenerate
                   </Button>
-                  <Button className="flex-1 h-10 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium">
-                    <Frame className="w-4 h-4 mr-2" />
+                  <Button className="flex-1 h-12 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium text-base">
+                    <Frame className="w-5 h-5 mr-2" />
                     Frame
                   </Button>
                 </div>
-                <div className="text-right text-gray-300 text-sm font-medium">
+                <div className="text-right text-gray-300 text-base font-medium pt-2">
                   {generationTime}
                 </div>
               </div>
