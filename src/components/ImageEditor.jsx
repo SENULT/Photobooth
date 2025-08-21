@@ -16,15 +16,8 @@ const ImageEditor = ({ image, onClose, onSave }) => {
     { id: 1, name: 'Gold Classic', color: '#FFD700', width: 25, style: 'solid' },
     { id: 2, name: 'Silver Elegant', color: '#C0C0C0', width: 20, style: 'solid' },
     { id: 3, name: 'Wood Vintage', color: '#8B4513', width: 30, style: 'solid' },
-    { id: 4, name: 'Modern White', color: '#FFFFFF', width: 15, style: 'solid' },
-    { id: 5, name: 'Black Bold', color: '#000000', width: 25, style: 'solid' },
-    { id: 6, name: 'Pink Sweet', color: '#FF69B4', width: 20, style: 'solid' },
-    { id: 7, name: 'Purple Magic', color: '#9932CC', width: 22, style: 'solid' },
-    { id: 8, name: 'Blue Ocean', color: '#1E90FF', width: 18, style: 'solid' },
-    { id: 9, name: 'Green Nature', color: '#32CD32', width: 20, style: 'solid' },
-    { id: 10, name: 'Red Passion', color: '#DC143C', width: 24, style: 'solid' },
-    { id: 11, name: 'Double Gold', color: '#FFD700', width: 15, style: 'double' },
-    { id: 12, name: 'Double Silver', color: '#C0C0C0', width: 15, style: 'double' },
+    { id: 4, name: 'Pink Sweet', color: '#FF69B4', width: 20, style: 'solid' },
+    { id: 5, name: 'Purple Magic', color: '#9932CC', width: 22, style: 'solid' },
   ];
 
   // Stickers phong phú hơn
@@ -83,11 +76,31 @@ const ImageEditor = ({ image, onClose, onSave }) => {
     const img = new Image();
     
     img.onload = () => {
-      canvas.width = 500;
-      canvas.height = 500;
+      // Calculate proper aspect ratio to avoid distortion
+      const maxSize = 500;
+      const aspectRatio = img.width / img.height;
       
-      // Draw main image
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      let canvasWidth, canvasHeight;
+      
+      if (aspectRatio > 1) {
+        // Landscape
+        canvasWidth = maxSize;
+        canvasHeight = maxSize / aspectRatio;
+      } else {
+        // Portrait or square
+        canvasHeight = maxSize;
+        canvasWidth = maxSize * aspectRatio;
+      }
+      
+      canvas.width = canvasWidth;
+      canvas.height = canvasHeight;
+      
+      // Clear canvas with white background
+      ctx.fillStyle = 'white';
+      ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+      
+      // Draw main image without distortion
+      ctx.drawImage(img, 0, 0, canvasWidth, canvasHeight);
       
       // Draw frame if selected
       if (selectedFrame) {
@@ -101,17 +114,17 @@ const ImageEditor = ({ image, onClose, onSave }) => {
           const gap = 5;
           
           // Outer frame
-          ctx.strokeRect(outer/2, outer/2, canvas.width - outer, canvas.height - outer);
+          ctx.strokeRect(outer/2, outer/2, canvasWidth - outer, canvasHeight - outer);
           
           // Inner frame
           const innerOffset = outer + gap;
           ctx.lineWidth = inner;
           ctx.strokeRect(innerOffset + inner/2, innerOffset + inner/2, 
-                        canvas.width - 2*innerOffset - inner, canvas.height - 2*innerOffset - inner);
+                        canvasWidth - 2*innerOffset - inner, canvasHeight - 2*innerOffset - inner);
         } else {
           // Single frame
           const offset = selectedFrame.width / 2;
-          ctx.strokeRect(offset, offset, canvas.width - selectedFrame.width, canvas.height - selectedFrame.width);
+          ctx.strokeRect(offset, offset, canvasWidth - selectedFrame.width, canvasHeight - selectedFrame.width);
         }
       }
       
@@ -272,37 +285,44 @@ const ImageEditor = ({ image, onClose, onSave }) => {
             <div className="p-4 max-h-96 xl:max-h-[calc(100vh-200px)] overflow-y-auto">
               {/* Frames Tab */}
               {activeTab === 'frames' && (
-                <div>
-                  <div className="grid grid-cols-2 gap-3 mb-4">
-                    <Button
-                      onClick={() => {setSelectedFrame(null); saveToHistory();}}
-                      className={`p-3 border-2 rounded-lg transition-all ${
-                        !selectedFrame ? 'border-purple-500 bg-purple-500/20' : 'border-gray-600 hover:border-gray-500'
-                      }`}
-                    >
-                      <div className="w-full h-16 bg-gray-700 rounded flex items-center justify-center text-xs text-gray-400">
-                        No Frame
-                      </div>
-                    </Button>
-                    {frames.map(frame => (
-                      <Button
+                <div className="space-y-6">
+                  {/* First row - 3 frames */}
+                  <div className="grid grid-cols-3 gap-3">
+                    {frames.slice(0, 3).map(frame => (
+                      <div
                         key={frame.id}
                         onClick={() => {setSelectedFrame(frame); saveToHistory();}}
-                        className={`p-3 border-2 rounded-lg transition-all ${
-                          selectedFrame?.id === frame.id ? 'border-purple-500 bg-purple-500/20' : 'border-gray-600 hover:border-gray-500'
+                        className={`cursor-pointer transition-all duration-200 ${
+                          selectedFrame?.id === frame.id ? 'ring-2 ring-pink-500 ring-offset-2 ring-offset-gray-800' : ''
                         }`}
                       >
-                        <div 
-                          className="w-full h-16 bg-gray-700 rounded flex items-center justify-center text-xs text-white"
-                          style={{ 
-                            border: frame.style === 'double' 
-                              ? `2px solid ${frame.color}, inset 0 0 0 6px transparent, inset 0 0 0 8px ${frame.color}` 
-                              : `3px solid ${frame.color}` 
-                          }}
-                        >
-                          {frame.name}
+                        <div className="w-20 h-24 bg-white rounded-sm flex flex-col items-center justify-between p-2 mx-auto hover:shadow-lg transition-shadow">
+                          <div className="w-full flex-1 bg-black rounded-sm mb-1"></div>
+                          <div className="text-xs text-black font-medium">
+                            Frame {frame.id}
+                          </div>
                         </div>
-                      </Button>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  {/* Second row - 2 frames */}
+                  <div className="flex justify-center gap-8">
+                    {frames.slice(3, 5).map(frame => (
+                      <div
+                        key={frame.id}
+                        onClick={() => {setSelectedFrame(frame); saveToHistory();}}
+                        className={`cursor-pointer transition-all duration-200 ${
+                          selectedFrame?.id === frame.id ? 'ring-2 ring-pink-500 ring-offset-2 ring-offset-gray-800' : ''
+                        }`}
+                      >
+                        <div className="w-20 h-24 bg-white rounded-sm flex flex-col items-center justify-between p-2 hover:shadow-lg transition-shadow">
+                          <div className="w-full flex-1 bg-black rounded-sm mb-1"></div>
+                          <div className="text-xs text-black font-medium">
+                            Frame {frame.id}
+                          </div>
+                        </div>
+                      </div>
                     ))}
                   </div>
                 </div>
